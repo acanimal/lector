@@ -1,0 +1,36 @@
+{
+  "name": "lector",
+  "version": "0.1.0",
+  "main": "main.js",
+  "devDependencies": {
+    "css-loader": "^0.16.0",
+    "eslint": "^1.2.1",
+    "eslint-loader": "^1.0.0",
+    "eslint-plugin-react": "^3.2.3",
+    "html-webpack-plugin": "^1.6.1",
+    "less": "^2.5.1",
+    "less-loader": "^2.2.0",
+    "node-libs-browser": "^0.5.2",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.11.0",
+    "webpack-merge": "^0.1.3"
+  },
+  "description": "Lector, your RSS feed reader and organizer",
+  "dependencies": {
+    "less": "^2.5.1"
+  },
+  "scripts": {
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "lint": "./node_modules/eslint/bin/eslint.js . --ext .js --ext .jsx",
+    "test": "test script"
+  },
+  "keywords": [
+    "lector",
+    "rss",
+    "feed",
+    "reader",
+    "organizer"
+  ],
+  "author": "Antonio Santiago (@acanimal)",
+  "license": "ISC"
+}
