@@ -7,17 +7,13 @@ var TARGET = process.env.npm_lifecycle_event;
 var ROOT_PATH = path.resolve(__dirname);
 
 var common = {
-  entry: path.resolve(ROOT_PATH, 'app/main'),
+  entry: {
+    app: path.resolve(ROOT_PATH, 'app/main'),
+    vendors: [path.resolve(ROOT_PATH, 'vendors/kk')]
+  },
   output: {
     path: path.resolve(ROOT_PATH, 'build'),
-    filename: 'bundle.js'
-  },
-  devServer: {
-    colors: true,
-    historyApiFallback: true,
-    hot: true,
-    inline: true,
-    progress: true
+    filename: 'assets/app.js'
   },
   module: {
     loaders: [
@@ -29,10 +25,10 @@ var common = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlwebpackPlugin({
-      title: 'Kanban app'
-    })
+      title: 'Lector'
+    }),
+    new webpack.optimize.CommonsChunkPlugin('vendors', 'assets/vendors.js')
   ]
 };
 
