@@ -1,5 +1,6 @@
 var path = require('path');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack = require('webpack');
 var merge = require('webpack-merge');
 
@@ -8,27 +9,44 @@ var ROOT_PATH = path.resolve(__dirname);
 
 var common = {
   entry: {
-    app: path.resolve(ROOT_PATH, 'app/main'),
+    app1: path.resolve(ROOT_PATH, 'app/main'),
+    app2: path.resolve(ROOT_PATH, 'app/main2'),
     vendors: [path.resolve(ROOT_PATH, 'vendors/kk')]
   },
   output: {
     path: path.resolve(ROOT_PATH, 'build'),
-    filename: 'assets/app.js'
+    filename: 'assets/[name].entry.js',
+    chunkFilename: "assets/[id].chunk.js"
   },
   module: {
     loaders: [
       {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
+        include: path.resolve(ROOT_PATH, 'app')
+      },
+      {
         test: /\.less$/,
-        loaders: ['style', 'css', 'less'],
+        // loaders: ['style', 'css', 'less'],
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader"),
         include: path.resolve(ROOT_PATH, 'app')
       }
     ]
   },
   plugins: [
     new HtmlwebpackPlugin({
-      title: 'Lector'
+      title: 'Lector',
+      filename: 'index1.html',
+      chunks: 'app1'
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendors', 'assets/vendors.js')
+    new HtmlwebpackPlugin({
+      title: 'Lector 2222',
+      filename: 'index2.html',
+      chunks: 'app2'
+    }),
+    new ExtractTextPlugin("[name].css"),
+    new webpack.optimize.CommonsChunkPlugin('init.js')
+    // new webpack.optimize.CommonsChunkPlugin('vendors', 'assets/vendors.js')
   ]
 };
 
