@@ -1,61 +1,56 @@
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var merge = require('webpack-merge');
 var path = require('path');
 
 var TARGET = process.env.npm_lifecycle_event;
 var APP_PATH = path.resolve(__dirname, 'app');
 var BUILD_PATH = path.resolve(__dirname, 'build');
 
-var common = {
-  entry: [
-    'webpack/hot/dev-server',
-    path.resolve(APP_PATH, 'alt')
-  ],
+var config = {
+  devtool: 'eval-source-map',
+  entry: {
+    lector: path.resolve(APP_PATH, 'app.js'),
+    email: path.resolve(APP_PATH, 'email.js')
+  },
   output: {
     path: BUILD_PATH,
-    filename: 'lector.js'
+    filename: '[name].js'
   },
   module: {
     loaders: [
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
-        include: APP_PATH
+        loader: "style-loader!css-loader",
+        // loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
+        // include: APP_PATH
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader"),
-        include: APP_PATH
-      },
+        loader: "style-loader!css-loader!less-loader",
+        // loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader"),
+        // include: APP_PATH
+      }
+      ,
       {
         test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel'
+        // loader: 'eslint-loader!babel-loader',
+        loader: 'babel-loader',
+        include: APP_PATH
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin("lector.css")
+    // new ExtractTextPlugin("lector.css"),
+    new HtmlWebpackPlugin({
+      inject: 'body',
+      template: path.resolve(APP_PATH, 'index.html'),
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'email.html',
+      template: path.resolve(APP_PATH, 'email.html'),
+    })
   ]
 };
 
-if(TARGET === 'start' || !TARGET) {
-  module.exports = merge(common, {
-    devtool: 'eval-source-map',
-    devServer: {
-      contentBase: './build',
-      colors: true,
-      historyApiFallback: true,
-      hot: true,
-      inline: true,
-      progress: true
-    },
-    module: {
-
-    },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin()
-    ]
-  });
-}
+module.exports = config;

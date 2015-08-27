@@ -1,28 +1,19 @@
-{
-  "env": {
-    "browser": true,
-    "node": true
-  },
-  "plugins": [
-    "react"
-  ],
-  "rules": {
-    "new-cap": 0,
-    "strict": 0,
-    "no-underscore-dangle": 0,
-    "no-use-before-define": 0,
-    "eol-last": 0,
-    "quotes": [2, "single"],
-    "react/jsx-boolean-value": 1,
-    "react/jsx-quotes": 1,
-    "react/jsx-no-undef": 1,
-    "react/jsx-uses-react": 1,
-    "react/jsx-uses-vars": 1,
-    "react/no-did-mount-set-state": 1,
-    "react/no-did-update-set-state": 1,
-    "react/no-multi-comp": 1,
-    "react/no-unknown-property": 1,
-    "react/react-in-jsx-scope": 1,
-    "react/self-closing-comp": 1
-  }
-}
+env:
+    browser: true
+    node: true
+
+rules:
+    indent: [2, 2]
+    brace-style: [2, "1tbs"]
+    comma-style: [2, "last"]
+    default-case: 2
+    func-style: [2, "declaration"]
+    guard-for-in: 2
+    no-floating-decimal: 2
+    no-nested-ternary: 2
+    no-undefined: 2
+    radix: 2
+    spaced-comment: [2, "always", { exceptions: ["-"]}]
+    strict: [2, "global"]
+    valid-jsdoc: [2, { prefer: { "return": "returns"}}]
+    wrap-iife: 2
